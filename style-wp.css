@@ -1,0 +1,48 @@
+/* body {
+    background: #0a0e14;
+    color: #e8e4d8;
+    -webkit-font-smoothing: antialiased;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: linear-gradient(rgba(232, 228, 216, 0.012) 1px, transparent 1px), linear-gradient(90deg, rgba(232, 228, 216, 0.012) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.mainheader .elementor-element:has(.elementor-menu-toggle) {
+    min-width: min-content;
+}
+
+.bannerTimer {
+    border-top-color: #e63e37 !important;
+}
+
+.bannerTimer .elementor-countdown-label {
+    padding-top: 10px;
+}
+
+.lineThroughHead {
+    text-decoration: line-through;
+    text-decoration-color: #8b9199;
+}
+
+.missionSecRow {
+    position: relative;
+}
+
+.missionSecRow::after {
+    content: '';
+    height: 100%;
+    top: 50%;
+    left: 47.5%;
+    width: 0.5px;
+    background: linear-gradient(180deg, transparent, rgba(232, 228, 216, 0.2), transparent);
+    position: absolute;
+    transform: translate(-50%, -50%);
+} */
+
