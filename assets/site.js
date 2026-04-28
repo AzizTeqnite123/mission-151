@@ -307,6 +307,35 @@
 })();
 
 
+(function () {
+  var d = document;
+  var w = "https://tally.so/widgets/embed.js";
+
+  function loadTally() {
+    if (typeof Tally !== "undefined") {
+      Tally.loadEmbeds();
+    } else {
+      d.querySelectorAll('iframe[data-tally-src]:not([src])').forEach(function (el) {
+        el.src = el.dataset.tallySrc;
+      });
+    }
+  }
+
+  if (typeof Tally !== "undefined") {
+    loadTally();
+    return;
+  }
+
+  if (!d.querySelector('script[src="' + w + '"]')) {
+    var s = d.createElement("script");
+    s.src = w;
+    s.async = true;
+    s.onload = loadTally;
+    s.onerror = loadTally;
+    d.body.appendChild(s);
+  }
+})();
+
 const toggleBtn = document.querySelector('.navBarToggleBtn');
 const navWrapper = document.querySelector('.navBarToggleWrapper');
 

@@ -27,12 +27,12 @@
       <div class="navBanerHldr">
         <div class="navBarToggleWrapper">
           <div class="nav">
-          <a href="#about">About</a>
-          <a href="live.html">Watch</a>
-          <a href="store.html">Store</a>
-          <a href="#register">Register</a>
-        </div>
-        <a href="#register" class="topbar-cta">Register</a>
+            <a href="#about">About</a>
+            <a href="live.html">Watch</a>
+            <a href="store.html">Store</a>
+            <a href="#register">Register</a>
+          </div>
+          <a href="#register" class="topbar-cta">Register</a>
         </div>
         <div class="navBarToggleBtn">
           <img src="uploads/menu-duo-md-svgrepo-com.svg" alt="">
@@ -157,7 +157,7 @@
         <div class="form-card">
           <h3 class="display">Register your county</h3>
           <p class="sub">Less than a minute. Yours becomes part of the map.</p>
-          <form onsubmit="event.preventDefault(); alert('Mockup — registration not connected.');">
+          <!-- <form onsubmit="event.preventDefault(); alert('Mockup — registration not connected.');">
             <div class="form-row">
               <div class="field">
                 <label for="fn">First name</label>
@@ -268,7 +268,11 @@
               By registering, you'll receive email updates from the campaign. Unsubscribe anytime.<br>
               <a href="privacy.html">Privacy</a> &middot; <a href="terms.html">Terms</a>
             </div>
-          </form>
+          </form> -->
+
+          <iframe data-tally-src="https://tally.so/embed/0QbYW9?alignLeft=1&transparentBackground=1&dynamicHeight=1"
+            loading="lazy" width="100%" height="583" frameborder="0" marginheight="0" marginwidth="0"
+            title="Registration Form Template"></iframe>
         </div>
       </div>
     </div>
@@ -311,7 +315,29 @@
     crossorigin="anonymous"></script>
   <script type="text/babel" src="tweaks-panel.jsx"></script>
   <script type="text/babel" src="assets/tweaks.jsx"></script>
+  <script>
+    var d = document,
+      w = "https://tally.so/widgets/embed.js",
+      v = function () {
+        "undefined" != typeof Tally
+          ? Tally.loadEmbeds()
+          : d
+            .querySelectorAll("iframe[data-tally-src]:not([src])")
+            .forEach(function (e) {
+              e.src = e.dataset.tallySrc;
+            });
+      };
 
+    if ("undefined" != typeof Tally) {
+      v();
+    } else if (d.querySelector('script[src="' + w + '"]') == null) {
+      var s = d.createElement("script");
+      s.src = w;
+      s.onload = v;
+      s.onerror = v;
+      d.body.appendChild(s);
+    }
+  </script>
 </body>
 
 </html>
