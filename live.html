@@ -1,515 +1,706 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Watch Live · Mission 151</title>
-<meta name="description" content="May 6, 2026 · 7:00 PM Mountain. Watch Mission 151 live and check in your county." />
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Staatliches&family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css" />
-<style>
-  .live-hero {
-    padding: 5rem 0 4rem;
-    border-bottom: 1px solid var(--border);
-  }
-  .live-hero h1 {
-    font-family: 'Staatliches', sans-serif;
-    font-size: clamp(4rem, 9vw, 7.5rem);
-    line-height: 0.9; letter-spacing: 0.005em;
-    margin-bottom: 1.5rem;
-  }
-  .live-hero h1 .num { color: var(--red-bright); text-shadow: 0 0 80px rgba(230, 62, 55, 0.25); }
-  .live-hero .lede {
-    font-family: 'Instrument Serif', serif; font-style: italic;
-    font-size: clamp(1.2rem, 1.8vw, 1.55rem);
-    color: var(--ink); max-width: 38rem; line-height: 1.4;
-    margin-bottom: 2rem;
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Watch Live · Mission 151</title>
+  <meta name="description" content="May 6, 2026 · 7:00 PM Mountain. Watch Mission 151 live and check in your county." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Staatliches&family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="assets/site.css" />
+  <link rel="stylesheet" href="assets/site-resp.css" />
+  <style>
+    .live-hero {
+      padding: 5rem 0 4rem;
+      border-bottom: 1px solid var(--border);
+    }
 
-  .live-grid {
-    display: grid;
-    grid-template-columns: 1.2fr 1fr;
-    gap: 3rem;
-    align-items: start;
-    padding: 4rem 0;
-  }
+    .live-hero h1 {
+      font-family: 'Staatliches', sans-serif;
+      font-size: clamp(4rem, 9vw, 7.5rem);
+      line-height: 0.9;
+      letter-spacing: 0.005em;
+      margin-bottom: 1.5rem;
+    }
 
-  .stage-card {
-    background: var(--bg-elevated);
-    border: 1px solid var(--border-strong);
-    border-radius: 2px;
-    padding: 1.75rem;
-    position: relative;
-  }
-  .stage-card::before {
-    content: ''; position: absolute;
-    top: 0; left: 0; right: 0; height: 2px;
-    background: var(--red);
-  }
-  .stage-card .kicker {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem; letter-spacing: 0.18em;
-    color: var(--ink-dim); margin-bottom: 1rem;
-    display: flex; align-items: center; gap: 0.55rem;
-  }
-  .stage-card h2 {
-    font-family: 'Staatliches', sans-serif;
-    font-size: 2.4rem; letter-spacing: 0.01em;
-    line-height: 1; margin-bottom: 0.85rem;
-  }
-  .stage-card p.lede {
-    font-family: 'Instrument Serif', serif; font-style: italic;
-    color: var(--ink-dim); font-size: 1.05rem;
-    line-height: 1.5; margin-bottom: 1.6rem;
-  }
+    .live-hero h1 .num {
+      color: var(--red-bright);
+      text-shadow: 0 0 80px rgba(230, 62, 55, 0.25);
+    }
 
-  .player-frame {
-    aspect-ratio: 16/9;
-    background:
-      radial-gradient(ellipse at center, rgba(200,50,44,0.15), transparent 70%),
-      var(--bg-accent);
-    border: 1px solid var(--border);
-    border-radius: 2px;
-    margin-bottom: 1rem;
-    display: flex; align-items: center; justify-content: center;
-    position: relative; overflow: hidden;
-  }
-  .player-frame::before {
-    content: ''; position: absolute; inset: 0;
-    background-image:
-      linear-gradient(rgba(232, 228, 216, 0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(232, 228, 216, 0.04) 1px, transparent 1px);
-    background-size: 28px 28px;
-  }
-  .player-frame .badge {
-    background: var(--red); color: var(--ink);
-    padding: 0.4rem 0.85rem;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem; letter-spacing: 0.18em;
-    position: absolute; top: 1rem; left: 1rem;
-    display: flex; align-items: center; gap: 0.5rem;
-  }
-  .player-frame .badge .live-dot {
-    background: var(--ink); box-shadow: 0 0 8px rgba(255,255,255,0.6);
-  }
-  .player-frame .center-mark {
-    font-family: 'Instrument Serif', serif; font-style: italic;
-    color: var(--ink-dim); font-size: 1.2rem;
-    text-align: center; padding: 1rem 2rem;
-    position: relative; z-index: 1;
-  }
-  .player-meta {
-    display: flex; justify-content: space-between;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem; letter-spacing: 0.12em;
-    color: var(--ink-dim);
-    padding-top: 1rem; border-top: 1px solid var(--border);
-  }
-  .player-meta .viewers { color: var(--green); }
+    .live-hero .lede {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-size: clamp(1.2rem, 1.8vw, 1.55rem);
+      color: var(--ink);
+      max-width: 38rem;
+      line-height: 1.4;
+      margin-bottom: 2rem;
+    }
 
-  .checkin-mini {
-    background: var(--bg-elevated);
-    border: 1px solid var(--border-strong);
-    border-radius: 2px;
-    padding: 2rem;
-    position: relative;
-  }
-  .checkin-mini::before {
-    content: ''; position: absolute;
-    top: 0; left: 0; right: 0; height: 2px;
-    background: var(--green);
-    box-shadow: 0 0 14px var(--green-glow);
-  }
-  .checkin-mini h3 {
-    font-family: 'Staatliches', sans-serif;
-    font-size: 2.1rem; letter-spacing: 0.01em;
-    line-height: 1; margin-bottom: 0.4rem;
-  }
-  .checkin-mini .sub {
-    color: var(--ink-dim); font-size: 0.92rem; margin-bottom: 1.4rem;
-  }
+    .live-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 3rem;
+      align-items: start;
+      padding: 4rem 0;
+    }
 
-  .replay-card {
-    background: var(--bg-elevated);
-    border: 1px solid var(--border-strong);
-    border-radius: 2px;
-    padding: 2rem;
-    text-align: center;
-  }
-  .replay-card .total {
-    font-family: 'Staatliches', sans-serif;
-    font-size: 5rem; line-height: 1;
-    color: var(--green);
-    text-shadow: 0 0 30px var(--green-glow);
-    margin-bottom: 0.5rem;
-  }
-  .replay-card .of {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.78rem; letter-spacing: 0.18em;
-    color: var(--ink-dim); margin-bottom: 2rem;
-  }
+    .stage-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-strong);
+      border-radius: 2px;
+      padding: 1.75rem;
+      position: relative;
+    }
 
-  @media (max-width: 920px) {
-    .live-grid { grid-template-columns: 1fr; gap: 2rem; padding: 2.5rem 0; }
-    .live-hero { padding: 3rem 0 2rem; }
-  }
-</style>
+    .stage-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--red);
+    }
+
+    .stage-card .kicker {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      color: var(--ink-dim);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+    }
+
+    .stage-card h2 {
+      font-family: 'Staatliches', sans-serif;
+      font-size: 2.4rem;
+      letter-spacing: 0.01em;
+      line-height: 1;
+      margin-bottom: 0.85rem;
+    }
+
+    .stage-card p.lede {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      color: var(--ink-dim);
+      font-size: 1.05rem;
+      line-height: 1.5;
+      margin-bottom: 1.6rem;
+    }
+
+    .player-frame {
+      aspect-ratio: 16/9;
+      background:
+        radial-gradient(ellipse at center, rgba(200, 50, 44, 0.15), transparent 70%),
+        var(--bg-accent);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .player-frame::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(232, 228, 216, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(232, 228, 216, 0.04) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+
+    .player-frame .badge {
+      background: var(--red);
+      color: var(--ink);
+      padding: 0.4rem 0.85rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .player-frame .badge .live-dot {
+      background: var(--ink);
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+    }
+
+    .player-frame .center-mark {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      color: var(--ink-dim);
+      font-size: 1.2rem;
+      text-align: center;
+      padding: 1rem 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .player-meta {
+      display: flex;
+      justify-content: space-between;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      color: var(--ink-dim);
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .player-meta .viewers {
+      color: var(--green);
+    }
+
+    .checkin-mini {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-strong);
+      border-radius: 2px;
+      padding: 2rem;
+      position: relative;
+    }
+
+    .checkin-mini::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--green);
+      box-shadow: 0 0 14px var(--green-glow);
+    }
+
+    .checkin-mini h3 {
+      font-family: 'Staatliches', sans-serif;
+      font-size: 2.1rem;
+      letter-spacing: 0.01em;
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+
+    .checkin-mini .sub {
+      color: var(--ink-dim);
+      font-size: 0.92rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .replay-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-strong);
+      border-radius: 2px;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .replay-card .total {
+      font-family: 'Staatliches', sans-serif;
+      font-size: 5rem;
+      line-height: 1;
+      color: var(--green);
+      text-shadow: 0 0 30px var(--green-glow);
+      margin-bottom: 0.5rem;
+    }
+
+    .replay-card .of {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      color: var(--ink-dim);
+      margin-bottom: 2rem;
+    }
+
+    @media (max-width: 920px) {
+      .live-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 2.5rem 0;
+      }
+
+      .live-hero {
+        padding: 3rem 0 2rem;
+      }
+    }
+  </style>
 </head>
+
 <body data-screen-label="02 Live">
 
-<!-- Live banner shows only during broadcast -->
-<div class="live-banner" data-show-phase="live">
+  <!-- Live banner shows only during broadcast -->
+  <!-- <div class="live-banner" data-show-phase="live">
   <div class="live-banner-inner">
     <span class="live-dot"></span>
     <span>LIVE NOW · MISSION 151</span>
     <span class="live-banner-spacer"></span>
     <a href="#watch" class="live-banner-link">Watch</a>
   </div>
-</div>
+</div> -->
 
-<div class="topbar">
-  <div class="topbar-inner">
-    <a href="index.html" class="live-mark">
-      <span class="live-dot"></span>
-      <span>MISSION 151</span>
-    </a>
-    <nav class="nav">
-      <a href="index.html#about">About</a>
-      <a href="live.html" class="active">Watch</a>
-      <a href="store.html">Store</a>
-      <a href="checkin.html">Check in</a>
-    </nav>
-    <a href="checkin.html" class="topbar-cta" data-show-phase="live">Check in</a>
-    <a href="index.html#register" class="topbar-cta" data-show-phase="pre post">Register</a>
-  </div>
-</div>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a href="live.html" class="live-mark">
+        <span class="live-dot"></span>
+        <span>LIVE MAY 6</span>
+      </a>
+      <div class="navBanerHldr">
+        <div class="navBarToggleWrapper">
+          <div class="nav">
+            <a href="/">Home</a>
+            <a href="/#about">About</a>
+            <a href="live.html">Watch</a>
+            <a href="store.html">Store</a>
+            <a href="/#register">Register</a>
+          </div>
+          <a href="/#register" class="topbar-cta">Register</a>
+        </div>
+        <div class="navBarToggleBtn">
+          <img src="uploads/menu-duo-md-svgrepo-com.svg" alt="">
+        </div>
+      </div>
+    </div>
+  </header>
 
-<!-- ============================================================
+  <!-- ============================================================
      PRE-EVENT STATE
      ============================================================ -->
-<section class="live-hero" data-show-phase="pre">
-  <div class="container">
-    <div class="hero-meta" style="font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 0.18em; color: var(--ink-dim); margin-bottom: 2rem;">May 6, 2026 &middot; 7:00 PM Mountain Time</div>
-    <h1>Watch<br><span class="num">live.</span></h1>
-    <p class="lede">Mission 151 starts the moment the clock hits zero. Register now so your county is on the map when it does.</p>
-  </div>
-</section>
+  <section class="live-hero" data-show-phase="pre">
+    <div class="container">
+      <div class="hero-meta"
+        style="font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 0.18em; color: var(--ink-dim); margin-bottom: 2rem;">
+        May 6, 2026 &middot; 7:00 PM Mountain Time</div>
+      <h1>Watch<br><span class="num">live.</span></h1>
+      <p class="lede">Mission 151 starts the moment the clock hits zero. Register now so your county is on the map when
+        it does.</p>
+    </div>
+  </section>
 
-<section data-show-phase="pre">
-  <div class="container">
-    <div class="live-grid">
-      <div>
-        <div class="stage-card">
-          <div class="kicker"><span class="live-dot red"></span> COUNTDOWN</div>
-          <h2 class="display">Until the broadcast.</h2>
-          <p class="lede">Watch will go live here at 7:00 PM Mountain on May 6. Bookmark this page.</p>
-          <div class="countdown" data-countdown style="background: var(--bg); padding: 1.5rem;">
-            <div class="countdown-grid">
-              <div class="cd-unit"><div class="cd-num" data-cd="d">--</div><div class="cd-label">DAYS</div></div>
-              <div class="cd-unit"><div class="cd-num" data-cd="h">--</div><div class="cd-label">HOURS</div></div>
-              <div class="cd-unit"><div class="cd-num" data-cd="m">--</div><div class="cd-label">MIN</div></div>
-              <div class="cd-unit"><div class="cd-num" data-cd="s">--</div><div class="cd-label">SEC</div></div>
+  <section data-show-phase="pre">
+    <div class="container">
+      <div class="live-grid">
+        <div>
+          <div class="stage-card">
+            <div class="kicker"><span class="live-dot red"></span> COUNTDOWN</div>
+            <h2 class="display">Until the broadcast.</h2>
+            <p class="lede">Watch will go live here at 7:00 PM Mountain on May 6. Bookmark this page.</p>
+            <div class="countdown" data-countdown style="background: var(--bg); padding: 1.5rem;">
+              <div class="countdown-grid">
+                <div class="cd-unit">
+                  <div class="cd-num" data-cd="d">--</div>
+                  <div class="cd-label">DAYS</div>
+                </div>
+                <div class="cd-unit">
+                  <div class="cd-num" data-cd="h">--</div>
+                  <div class="cd-label">HOURS</div>
+                </div>
+                <div class="cd-unit">
+                  <div class="cd-num" data-cd="m">--</div>
+                  <div class="cd-label">MIN</div>
+                </div>
+                <div class="cd-unit">
+                  <div class="cd-num" data-cd="s">--</div>
+                  <div class="cd-label">SEC</div>
+                </div>
+              </div>
+              <div class="cd-tagline">UNTIL COLORADO COMES HOME</div>
             </div>
-            <div class="cd-tagline">UNTIL COLORADO COMES HOME</div>
+          </div>
+
+          <div style="height: 1.25rem;"></div>
+
+          <div class="stage-card">
+            <div class="kicker">WATCH ON</div>
+            <div class="watch-row">
+              <a href="https://youtube.com/" class="watch-btn">
+                <span class="watch-btn-label">
+                  <span class="platform">YOUTUBE</span>
+                  <span class="name">Live stream</span>
+                </span>
+                <span class="watch-btn-arrow">→</span>
+              </a>
+              <a href="https://facebook.com/" class="watch-btn">
+                <span class="watch-btn-label">
+                  <span class="platform">FACEBOOK</span>
+                  <span class="name">Live broadcast</span>
+                </span>
+                <span class="watch-btn-arrow">→</span>
+              </a>
+            </div>
+            <p
+              style="font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.12em; color: var(--ink-dim); padding-top: 0.5rem;">
+              LINKS GO LIVE MAY 6 · 6:45 PM MT</p>
           </div>
         </div>
 
-        <div style="height: 1.25rem;"></div>
+        <div class="map-side">
+          <h3 class="display"
+            style="font-family: 'Staatliches', sans-serif; font-size: 2rem; letter-spacing: 0.01em; line-height: 1; margin-bottom: 0.85rem;">
+            Standing by.</h3>
+          <p
+            style="font-family: 'Instrument Serif', serif; font-style: italic; color: var(--ink-dim); font-size: 1rem; margin-bottom: 1.5rem; line-height: 1.5;">
+            Coloradans who've already pre-registered. They'll light up live on May 6.</p>
+          <div class="map-card">
+            <div class="map-meta">
+              <span>COLORADO &middot; PRE-EVENT</span>
+              <span class="map-meta-count" data-map-meta>—</span>
+            </div>
+            <svg class="map-svg" data-map xmlns="http://www.w3.org/2000/svg"></svg>
+          </div>
+          <div style="margin-top: 1.5rem; text-align: center;">
+            <a href="index.html#register" class="btn-primary">Register your county</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        <div class="stage-card">
-          <div class="kicker">WATCH ON</div>
+  <!-- ============================================================
+     LIVE STATE
+     ============================================================ -->
+  <section data-show-phase="live" id="watch">
+    <div class="container">
+      <div class="live-grid" style="padding-top: 2.5rem;">
+        <div>
+          <div class="stage-card">
+            <div class="kicker"><span class="live-dot red"></span> ON THE AIR</div>
+            <h2 class="display">Mission 151. Live now.</h2>
+            <p class="lede">Pick a stream. Then check in your county on the right.</p>
+            <div class="player-frame">
+              <div class="badge"><span class="live-dot"></span> LIVE</div>
+              <div class="center-mark">[ live broadcast embed ]<br><span
+                  style="font-family: 'JetBrains Mono', monospace; font-style: normal; font-size: 0.7rem; letter-spacing: 0.18em;">YOUTUBE
+                  / FACEBOOK</span></div>
+            </div>
+            <div class="player-meta">
+              <span>MISSION 151 &middot; MAY 6, 2026</span>
+              <span class="viewers">● 12,847 WATCHING</span>
+            </div>
+          </div>
+          <div style="height: 1.25rem;"></div>
           <div class="watch-row">
             <a href="https://youtube.com/" class="watch-btn">
               <span class="watch-btn-label">
                 <span class="platform">YOUTUBE</span>
-                <span class="name">Live stream</span>
+                <span class="name">Open in YouTube</span>
               </span>
               <span class="watch-btn-arrow">→</span>
             </a>
             <a href="https://facebook.com/" class="watch-btn">
               <span class="watch-btn-label">
                 <span class="platform">FACEBOOK</span>
-                <span class="name">Live broadcast</span>
+                <span class="name">Open in Facebook</span>
               </span>
               <span class="watch-btn-arrow">→</span>
             </a>
           </div>
-          <p style="font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.12em; color: var(--ink-dim); padding-top: 0.5rem;">LINKS GO LIVE MAY 6 · 6:45 PM MT</p>
         </div>
-      </div>
 
-      <div class="map-side">
-        <h3 class="display" style="font-family: 'Staatliches', sans-serif; font-size: 2rem; letter-spacing: 0.01em; line-height: 1; margin-bottom: 0.85rem;">Standing by.</h3>
-        <p style="font-family: 'Instrument Serif', serif; font-style: italic; color: var(--ink-dim); font-size: 1rem; margin-bottom: 1.5rem; line-height: 1.5;">Coloradans who've already pre-registered. They'll light up live on May 6.</p>
-        <div class="map-card">
-          <div class="map-meta">
-            <span>COLORADO &middot; PRE-EVENT</span>
-            <span class="map-meta-count" data-map-meta>—</span>
+        <div>
+          <div class="checkin-mini">
+            <h3 class="display">Check in. Light your county.</h3>
+            <p class="sub">One email, one county. Your home goes from dark to glowing live.</p>
+            <form onsubmit="event.preventDefault(); alert('Mockup — check-in not connected.');">
+              <div class="field">
+                <label for="lem">Email</label>
+                <input id="lem" type="email" placeholder="you@example.com" required />
+              </div>
+              <div class="field">
+                <label for="lco">Your county</label>
+                <select id="lco" required>
+                  <option value="">Select your county</option>
+                  <option>Adams</option>
+                  <option>Alamosa</option>
+                  <option>Arapahoe</option>
+                  <option>Archuleta</option>
+                  <option>Baca</option>
+                  <option>Bent</option>
+                  <option>Boulder</option>
+                  <option>Broomfield</option>
+                  <option>Chaffee</option>
+                  <option>Cheyenne</option>
+                  <option>Clear Creek</option>
+                  <option>Conejos</option>
+                  <option>Costilla</option>
+                  <option>Crowley</option>
+                  <option>Custer</option>
+                  <option>Delta</option>
+                  <option>Denver</option>
+                  <option>Dolores</option>
+                  <option>Douglas</option>
+                  <option>Eagle</option>
+                  <option>El Paso</option>
+                  <option>Elbert</option>
+                  <option>Fremont</option>
+                  <option>Garfield</option>
+                  <option>Gilpin</option>
+                  <option>Grand</option>
+                  <option>Gunnison</option>
+                  <option>Hinsdale</option>
+                  <option>Huerfano</option>
+                  <option>Jackson</option>
+                  <option>Jefferson</option>
+                  <option>Kiowa</option>
+                  <option>Kit Carson</option>
+                  <option>La Plata</option>
+                  <option>Lake</option>
+                  <option>Larimer</option>
+                  <option>Las Animas</option>
+                  <option>Lincoln</option>
+                  <option>Logan</option>
+                  <option>Mesa</option>
+                  <option>Mineral</option>
+                  <option>Moffat</option>
+                  <option>Montezuma</option>
+                  <option>Montrose</option>
+                  <option>Morgan</option>
+                  <option>Otero</option>
+                  <option>Ouray</option>
+                  <option>Park</option>
+                  <option>Phillips</option>
+                  <option>Pitkin</option>
+                  <option>Prowers</option>
+                  <option>Pueblo</option>
+                  <option>Rio Blanco</option>
+                  <option>Rio Grande</option>
+                  <option>Routt</option>
+                  <option>Saguache</option>
+                  <option>San Juan</option>
+                  <option>San Miguel</option>
+                  <option>Sedgwick</option>
+                  <option>Summit</option>
+                  <option>Teller</option>
+                  <option>Washington</option>
+                  <option>Weld</option>
+                  <option>Yuma</option>
+                </select>
+              </div>
+              <button type="submit" class="submit-btn">Check in my county</button>
+            </form>
           </div>
-          <svg class="map-svg" data-map xmlns="http://www.w3.org/2000/svg"></svg>
-        </div>
-        <div style="margin-top: 1.5rem; text-align: center;">
-          <a href="index.html#register" class="btn-primary">Register your county</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- ============================================================
-     LIVE STATE
-     ============================================================ -->
-<section data-show-phase="live" id="watch">
-  <div class="container">
-    <div class="live-grid" style="padding-top: 2.5rem;">
-      <div>
-        <div class="stage-card">
-          <div class="kicker"><span class="live-dot red"></span> ON THE AIR</div>
-          <h2 class="display">Mission 151. Live now.</h2>
-          <p class="lede">Pick a stream. Then check in your county on the right.</p>
-          <div class="player-frame">
-            <div class="badge"><span class="live-dot"></span> LIVE</div>
-            <div class="center-mark">[ live broadcast embed ]<br><span style="font-family: 'JetBrains Mono', monospace; font-style: normal; font-size: 0.7rem; letter-spacing: 0.18em;">YOUTUBE / FACEBOOK</span></div>
-          </div>
-          <div class="player-meta">
-            <span>MISSION 151 &middot; MAY 6, 2026</span>
-            <span class="viewers">● 12,847 WATCHING</span>
-          </div>
-        </div>
-        <div style="height: 1.25rem;"></div>
-        <div class="watch-row">
-          <a href="https://youtube.com/" class="watch-btn">
-            <span class="watch-btn-label">
-              <span class="platform">YOUTUBE</span>
-              <span class="name">Open in YouTube</span>
-            </span>
-            <span class="watch-btn-arrow">→</span>
-          </a>
-          <a href="https://facebook.com/" class="watch-btn">
-            <span class="watch-btn-label">
-              <span class="platform">FACEBOOK</span>
-              <span class="name">Open in Facebook</span>
-            </span>
-            <span class="watch-btn-arrow">→</span>
-          </a>
-        </div>
-      </div>
+          <div style="height: 1.25rem;"></div>
 
-      <div>
-        <div class="checkin-mini">
-          <h3 class="display">Check in. Light your county.</h3>
-          <p class="sub">One email, one county. Your home goes from dark to glowing live.</p>
-          <form onsubmit="event.preventDefault(); alert('Mockup — check-in not connected.');">
-            <div class="field">
-              <label for="lem">Email</label>
-              <input id="lem" type="email" placeholder="you@example.com" required />
+          <div class="tally">
+            <div class="tally-cell">
+              <div class="tally-num lit" data-lit-count>0</div>
+              <div class="tally-label">LIT</div>
             </div>
-            <div class="field">
-              <label for="lco">Your county</label>
-              <select id="lco" required>
-                <option value="">Select your county</option>
-                <option>Adams</option><option>Alamosa</option><option>Arapahoe</option><option>Archuleta</option><option>Baca</option><option>Bent</option><option>Boulder</option><option>Broomfield</option><option>Chaffee</option><option>Cheyenne</option><option>Clear Creek</option><option>Conejos</option><option>Costilla</option><option>Crowley</option><option>Custer</option><option>Delta</option><option>Denver</option><option>Dolores</option><option>Douglas</option><option>Eagle</option><option>El Paso</option><option>Elbert</option><option>Fremont</option><option>Garfield</option><option>Gilpin</option><option>Grand</option><option>Gunnison</option><option>Hinsdale</option><option>Huerfano</option><option>Jackson</option><option>Jefferson</option><option>Kiowa</option><option>Kit Carson</option><option>La Plata</option><option>Lake</option><option>Larimer</option><option>Las Animas</option><option>Lincoln</option><option>Logan</option><option>Mesa</option><option>Mineral</option><option>Moffat</option><option>Montezuma</option><option>Montrose</option><option>Morgan</option><option>Otero</option><option>Ouray</option><option>Park</option><option>Phillips</option><option>Pitkin</option><option>Prowers</option><option>Pueblo</option><option>Rio Blanco</option><option>Rio Grande</option><option>Routt</option><option>Saguache</option><option>San Juan</option><option>San Miguel</option><option>Sedgwick</option><option>Summit</option><option>Teller</option><option>Washington</option><option>Weld</option><option>Yuma</option>
-              </select>
+            <div class="tally-cell">
+              <div class="tally-num standing" data-standing-count>0</div>
+              <div class="tally-label">STANDING BY</div>
             </div>
-            <button type="submit" class="submit-btn">Check in my county</button>
-          </form>
-        </div>
+            <div class="tally-cell">
+              <div class="tally-num" data-dark-count>0</div>
+              <div class="tally-label">DARK</div>
+            </div>
+          </div>
 
-        <div style="height: 1.25rem;"></div>
-
-        <div class="tally">
-          <div class="tally-cell">
-            <div class="tally-num lit" data-lit-count>0</div>
-            <div class="tally-label">LIT</div>
-          </div>
-          <div class="tally-cell">
-            <div class="tally-num standing" data-standing-count>0</div>
-            <div class="tally-label">STANDING BY</div>
-          </div>
-          <div class="tally-cell">
-            <div class="tally-num" data-dark-count>0</div>
-            <div class="tally-label">DARK</div>
-          </div>
-        </div>
-
-        <div class="map-card">
-          <div class="map-meta">
-            <span>COLORADO &middot; LIVE</span>
-            <span class="map-meta-count" data-map-meta>—</span>
-          </div>
-          <svg class="map-svg" data-map xmlns="http://www.w3.org/2000/svg"></svg>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
-     POST-EVENT STATE
-     ============================================================ -->
-<section class="live-hero" data-show-phase="post">
-  <div class="container">
-    <div class="hero-meta" style="font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 0.18em; color: var(--ink-dim); margin-bottom: 2rem;">MAY 6, 2026 &middot; 64 / 64 LIT</div>
-    <h1>Colorado<br><span class="num">came home.</span></h1>
-    <p class="lede">All sixty-four counties checked in live. Watch the replay. Read the pledge. Bring someone with you next time.</p>
-  </div>
-</section>
-
-<section data-show-phase="post">
-  <div class="container">
-    <div class="live-grid" style="padding: 4rem 0 3rem;">
-      <div>
-        <div class="stage-card">
-          <div class="kicker">REPLAY</div>
-          <h2 class="display">Watch the broadcast.</h2>
-          <p class="lede">Ninety minutes. The full operation, on the record.</p>
-          <div class="player-frame">
-            <div class="center-mark">[ broadcast replay ]<br><span style="font-family: 'JetBrains Mono', monospace; font-style: normal; font-size: 0.7rem; letter-spacing: 0.18em;">1:29:48 RUNTIME</span></div>
-          </div>
-          <div class="watch-row" style="margin-top: 1rem; margin-bottom: 0;">
-            <a href="https://youtube.com/" class="watch-btn">
-              <span class="watch-btn-label">
-                <span class="platform">YOUTUBE</span>
-                <span class="name">Watch replay</span>
-              </span>
-              <span class="watch-btn-arrow">→</span>
-            </a>
-            <a href="https://facebook.com/" class="watch-btn">
-              <span class="watch-btn-label">
-                <span class="platform">FACEBOOK</span>
-                <span class="name">Watch replay</span>
-              </span>
-              <span class="watch-btn-arrow">→</span>
-            </a>
-          </div>
-        </div>
-      </div>
-      <div>
-        <div class="replay-card">
-          <div class="total" data-lit-count>64</div>
-          <div class="of">OF 64 COUNTIES LIT LIVE</div>
-          <p style="font-family: 'Instrument Serif', serif; font-style: italic; color: var(--ink); font-size: 1.1rem; line-height: 1.5; margin-bottom: 1.75rem;">A team appointed. A pledge signed. A state on the record.</p>
           <div class="map-card">
             <div class="map-meta">
-              <span>COLORADO</span>
-              <span class="map-meta-count" data-map-meta>64 / 64 LIT</span>
+              <span>COLORADO &middot; LIVE</span>
+              <span class="map-meta-count" data-map-meta>—</span>
             </div>
             <svg class="map-svg" data-map xmlns="http://www.w3.org/2000/svg"></svg>
           </div>
         </div>
       </div>
     </div>
+  </section>
 
-    <div style="padding: 2rem 0 6rem;">
-      <p class="section-kicker">HIGHLIGHTS</p>
-      <h2 class="section-title">Five moments to start with.</h2>
-      <div class="clip-grid">
-        <a href="#" class="clip-card">
-          <div class="clip-thumb">
-            <div class="clip-play">▶</div>
-            <span class="clip-time">04:12</span>
-          </div>
-          <div class="clip-meta">
-            <div class="kicker">CHAPTER 01</div>
-            <div class="title">The pledge, on camera.</div>
-          </div>
-        </a>
-        <a href="#" class="clip-card">
-          <div class="clip-thumb">
-            <div class="clip-play">▶</div>
-            <span class="clip-time">06:48</span>
-          </div>
-          <div class="clip-meta">
-            <div class="kicker">CHAPTER 02</div>
-            <div class="title">Naming the team, live.</div>
-          </div>
-        </a>
-        <a href="#" class="clip-card">
-          <div class="clip-thumb">
-            <div class="clip-play">▶</div>
-            <span class="clip-time">11:30</span>
-          </div>
-          <div class="clip-meta">
-            <div class="kicker">CHAPTER 03</div>
-            <div class="title">The county map goes 64.</div>
-          </div>
-        </a>
-        <a href="#" class="clip-card">
-          <div class="clip-thumb">
-            <div class="clip-play">▶</div>
-            <span class="clip-time">07:55</span>
-          </div>
-          <div class="clip-meta">
-            <div class="kicker">CHAPTER 04</div>
-            <div class="title">Real questions. On the record.</div>
-          </div>
-        </a>
-        <a href="#" class="clip-card">
-          <div class="clip-thumb">
-            <div class="clip-play">▶</div>
-            <span class="clip-time">02:38</span>
-          </div>
-          <div class="clip-meta">
-            <div class="kicker">CHAPTER 05</div>
-            <div class="title">Closing remarks. The mission ahead.</div>
-          </div>
-        </a>
-        <a href="index.html#register" class="clip-card">
-          <div class="clip-thumb">
-            <div class="clip-play" style="background: transparent; border: 1px solid var(--ink); color: var(--ink); border-radius: 2px; width: auto; height: auto; padding: 0.5rem 0.85rem; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.18em;">JOIN →</div>
-          </div>
-          <div class="clip-meta">
-            <div class="kicker">NEXT</div>
-            <div class="title">Bring your county to what's next.</div>
-          </div>
-        </a>
-      </div>
+  <!-- ============================================================
+     POST-EVENT STATE
+     ============================================================ -->
+  <section class="live-hero" data-show-phase="post">
+    <div class="container">
+      <div class="hero-meta"
+        style="font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 0.18em; color: var(--ink-dim); margin-bottom: 2rem;">
+        MAY 6, 2026 &middot; 64 / 64 LIT</div>
+      <h1>Colorado<br><span class="num">came home.</span></h1>
+      <p class="lede">All sixty-four counties checked in live. Watch the replay. Read the pledge. Bring someone with you
+        next time.</p>
     </div>
+  </section>
 
-    <div class="form-card" style="max-width: 38rem; margin: 0 auto 5rem;">
-      <h3 class="display">Stay with the mission.</h3>
-      <p class="sub">Get the next operation in your inbox. No spam. Unsubscribe anytime.</p>
-      <form onsubmit="event.preventDefault(); alert('Mockup — signup not connected.');">
-        <div class="field">
-          <label for="pem">Email</label>
-          <input id="pem" type="email" placeholder="you@example.com" required />
+  <section data-show-phase="post">
+    <div class="container">
+      <div class="live-grid" style="padding: 4rem 0 3rem;">
+        <div>
+          <div class="stage-card">
+            <div class="kicker">REPLAY</div>
+            <h2 class="display">Watch the broadcast.</h2>
+            <p class="lede">Ninety minutes. The full operation, on the record.</p>
+            <div class="player-frame">
+              <div class="center-mark">[ broadcast replay ]<br><span
+                  style="font-family: 'JetBrains Mono', monospace; font-style: normal; font-size: 0.7rem; letter-spacing: 0.18em;">1:29:48
+                  RUNTIME</span></div>
+            </div>
+            <div class="watch-row" style="margin-top: 1rem; margin-bottom: 0;">
+              <a href="https://youtube.com/" class="watch-btn">
+                <span class="watch-btn-label">
+                  <span class="platform">YOUTUBE</span>
+                  <span class="name">Watch replay</span>
+                </span>
+                <span class="watch-btn-arrow">→</span>
+              </a>
+              <a href="https://facebook.com/" class="watch-btn">
+                <span class="watch-btn-label">
+                  <span class="platform">FACEBOOK</span>
+                  <span class="name">Watch replay</span>
+                </span>
+                <span class="watch-btn-arrow">→</span>
+              </a>
+            </div>
+          </div>
         </div>
-        <button type="submit" class="submit-btn">Send me what's next</button>
-      </form>
-    </div>
-  </div>
-</section>
+        <div>
+          <div class="replay-card">
+            <div class="total" data-lit-count>64</div>
+            <div class="of">OF 64 COUNTIES LIT LIVE</div>
+            <p
+              style="font-family: 'Instrument Serif', serif; font-style: italic; color: var(--ink); font-size: 1.1rem; line-height: 1.5; margin-bottom: 1.75rem;">
+              A team appointed. A pledge signed. A state on the record.</p>
+            <div class="map-card">
+              <div class="map-meta">
+                <span>COLORADO</span>
+                <span class="map-meta-count" data-map-meta>64 / 64 LIT</span>
+              </div>
+              <svg class="map-svg" data-map xmlns="http://www.w3.org/2000/svg"></svg>
+            </div>
+          </div>
+        </div>
+      </div>
 
-<footer>
-  <div class="container">
-    <div class="footer-top">
-      <p class="footer-tag">Mission 151 is the live launch of the Colorado Comeback. May 6, 2026.</p>
-      <div class="footer-links">
-        <a href="index.html#about">About</a>
-        <a href="live.html">Watch</a>
-        <a href="store.html">Store</a>
-        <a href="checkin.html">Check in</a>
-        <a href="privacy.html">Privacy</a>
-        <a href="terms.html">Terms</a>
+      <div style="padding: 2rem 0 6rem;">
+        <p class="section-kicker">HIGHLIGHTS</p>
+        <h2 class="section-title">Five moments to start with.</h2>
+        <div class="clip-grid">
+          <a href="#" class="clip-card">
+            <div class="clip-thumb">
+              <div class="clip-play">▶</div>
+              <span class="clip-time">04:12</span>
+            </div>
+            <div class="clip-meta">
+              <div class="kicker">CHAPTER 01</div>
+              <div class="title">The pledge, on camera.</div>
+            </div>
+          </a>
+          <a href="#" class="clip-card">
+            <div class="clip-thumb">
+              <div class="clip-play">▶</div>
+              <span class="clip-time">06:48</span>
+            </div>
+            <div class="clip-meta">
+              <div class="kicker">CHAPTER 02</div>
+              <div class="title">Naming the team, live.</div>
+            </div>
+          </a>
+          <a href="#" class="clip-card">
+            <div class="clip-thumb">
+              <div class="clip-play">▶</div>
+              <span class="clip-time">11:30</span>
+            </div>
+            <div class="clip-meta">
+              <div class="kicker">CHAPTER 03</div>
+              <div class="title">The county map goes 64.</div>
+            </div>
+          </a>
+          <a href="#" class="clip-card">
+            <div class="clip-thumb">
+              <div class="clip-play">▶</div>
+              <span class="clip-time">07:55</span>
+            </div>
+            <div class="clip-meta">
+              <div class="kicker">CHAPTER 04</div>
+              <div class="title">Real questions. On the record.</div>
+            </div>
+          </a>
+          <a href="#" class="clip-card">
+            <div class="clip-thumb">
+              <div class="clip-play">▶</div>
+              <span class="clip-time">02:38</span>
+            </div>
+            <div class="clip-meta">
+              <div class="kicker">CHAPTER 05</div>
+              <div class="title">Closing remarks. The mission ahead.</div>
+            </div>
+          </a>
+          <a href="index.html#register" class="clip-card">
+            <div class="clip-thumb">
+              <div class="clip-play"
+                style="background: transparent; border: 1px solid var(--ink); color: var(--ink); border-radius: 2px; width: auto; height: auto; padding: 0.5rem 0.85rem; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.18em;">
+                JOIN →</div>
+            </div>
+            <div class="clip-meta">
+              <div class="kicker">NEXT</div>
+              <div class="title">Bring your county to what's next.</div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="form-card" style="max-width: 38rem; margin: 0 auto 5rem;">
+        <h3 class="display">Stay with the mission.</h3>
+        <p class="sub">Get the next operation in your inbox. No spam. Unsubscribe anytime.</p>
+        <form onsubmit="event.preventDefault(); alert('Mockup — signup not connected.');">
+          <div class="field">
+            <label for="pem">Email</label>
+            <input id="pem" type="email" placeholder="you@example.com" required />
+          </div>
+          <button type="submit" class="submit-btn">Send me what's next</button>
+        </form>
       </div>
     </div>
-    <div class="footer-legal">
-      Paid for by Victor Marx for Governor.<br>
-      [Registered agent name and physical mailing address]<br>
-      Not authorized by any candidate or candidate's committee other than Victor Marx for Governor.
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-top">
+        <p class="footer-tag">Mission 151 is the live launch of the Colorado Comeback. May 6, 2026.</p>
+        <div class="footer-links">
+          <a href="index.html#about">About</a>
+          <a href="live.html">Watch</a>
+          <a href="store.html">Store</a>
+          <a href="checkin.html">Check in</a>
+          <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
+        </div>
+      </div>
+      <div class="footer-legal">
+        Paid for by Victor Marx for Governor.<br>
+        [Registered agent name and physical mailing address]<br>
+        Not authorized by any candidate or candidate's committee other than Victor Marx for Governor.
+      </div>
     </div>
-  </div>
-</footer>
+  </footer>
 
-<div class="preview-state-pill"></div>
+  <div class="preview-state-pill"></div>
 
-<script src="assets/site.js"></script>
-<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
-<script type="text/babel" src="tweaks-panel.jsx"></script>
-<script type="text/babel" src="assets/tweaks.jsx"></script>
+  <script src="assets/site.js"></script>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js"
+    integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L"
+    crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"
+    integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm"
+    crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"
+    integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y"
+    crossorigin="anonymous"></script>
+  <script type="text/babel" src="tweaks-panel.jsx"></script>
+  <script type="text/babel" src="assets/tweaks.jsx"></script>
 </body>
+
 </html>

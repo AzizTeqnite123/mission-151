@@ -1,87 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Privacy · Mission 151</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Staatliches&family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy · Mission 151</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Staatliches&family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="assets/site.css" />
+  <link rel="stylesheet" href="assets/site-resp.css" />
 </head>
+
 <body data-screen-label="04 Privacy">
 
-<div class="topbar">
-  <div class="topbar-inner">
-    <a href="index.html" class="live-mark">
-      <span class="live-dot"></span>
-      <span>MISSION 151</span>
-    </a>
-    <nav class="nav">
-      <a href="index.html#about">About</a>
-      <a href="live.html">Watch</a>
-      <a href="store.html">Store</a>
-      <a href="checkin.html">Check in</a>
-    </nav>
-    <a href="index.html#register" class="topbar-cta">Register</a>
-  </div>
-</div>
-
-<section class="legal-page">
-  <div class="container">
-    <div class="lp-inner">
-      <h1>Privacy</h1>
-      <p class="updated">LAST UPDATED · APRIL 2026</p>
-
-      <p>This site is operated by Victor Marx for Governor. We collect a minimum of personal information for one purpose: running Mission 151 and the campaigns that follow it.</p>
-
-      <h2>What we collect</h2>
-      <ul>
-        <li><strong>Registration:</strong> first name, last name, email, county, and (optionally) mobile number.</li>
-        <li><strong>Check-in:</strong> email and county.</li>
-        <li><strong>Captain applications:</strong> the same registration data plus your stated interest in leading your county.</li>
-        <li><strong>Server-side technical data:</strong> IP address and request headers, retained briefly for fraud and abuse prevention.</li>
-      </ul>
-
-      <h2>Why we collect it</h2>
-      <p>To confirm registrations, deliver event reminders, drive the live county map on May 6, 2026, and contact registrants about future operations. We do not sell, rent, or trade personal information.</p>
-
-      <h2>SMS messages</h2>
-      <p>We only send text messages to people who provide a mobile number <strong>and</strong> check the SMS consent box. You can reply <strong>STOP</strong> to opt out at any time, or <strong>HELP</strong> for help. Message and data rates may apply.</p>
-
-      <h2>Cookies</h2>
-      <p>We use a small number of first-party cookies to keep your check-in session in sync with the live broadcast. We do not use third-party advertising trackers on this site.</p>
-
-      <h2>Your choices</h2>
-      <p>To unsubscribe from email, use the link in any message we send you. To request deletion of your data, email <a href="mailto:privacy@mission151.com">privacy@mission151.com</a>.</p>
-
-      <h2>Contact</h2>
-      <p>Victor Marx for Governor<br>[Registered agent name and physical mailing address]</p>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="container">
-    <div class="footer-top">
-      <p class="footer-tag">Mission 151 is the live launch of the Colorado Comeback. May 6, 2026.</p>
-      <div class="footer-links">
-        <a href="index.html#about">About</a>
-        <a href="live.html">Watch</a>
-        <a href="store.html">Store</a>
-        <a href="checkin.html">Check in</a>
-        <a href="privacy.html">Privacy</a>
-        <a href="terms.html">Terms</a>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a href="live.html" class="live-mark">
+        <span class="live-dot"></span>
+        <span>LIVE MAY 6</span>
+      </a>
+      <div class="navBanerHldr">
+        <div class="navBarToggleWrapper">
+          <div class="nav">
+            <a href="/">Home</a>
+            <a href="/#about">About</a>
+            <a href="live.html">Watch</a>
+            <a href="store.html">Store</a>
+            <a href="/#register">Register</a>
+          </div>
+          <a href="/#register" class="topbar-cta">Register</a>
+        </div>
+        <div class="navBarToggleBtn">
+          <img src="uploads/menu-duo-md-svgrepo-com.svg" alt="">
+        </div>
       </div>
     </div>
-    <div class="footer-legal">
-      Paid for by Victor Marx for Governor.<br>
-      [Registered agent name and physical mailing address]<br>
-      Not authorized by any candidate or candidate's committee other than Victor Marx for Governor.
-    </div>
-  </div>
-</footer>
+  </header>
 
-<script src="assets/site.js"></script>
+  <section class="legal-page">
+    <div class="container">
+      <div class="lp-inner">
+        <h1>Privacy</h1>
+        <p class="updated">LAST UPDATED · APRIL 2026</p>
+
+        <p>This site is operated by Victor Marx for Governor. We collect a minimum of personal information for one
+          purpose: running Mission 151 and the campaigns that follow it.</p>
+
+        <h2>What we collect</h2>
+        <ul>
+          <li><strong>Registration:</strong> first name, last name, email, county, and (optionally) mobile number.</li>
+          <li><strong>Check-in:</strong> email and county.</li>
+          <li><strong>Captain applications:</strong> the same registration data plus your stated interest in leading
+            your county.</li>
+          <li><strong>Server-side technical data:</strong> IP address and request headers, retained briefly for fraud
+            and abuse prevention.</li>
+        </ul>
+
+        <h2>Why we collect it</h2>
+        <p>To confirm registrations, deliver event reminders, drive the live county map on May 6, 2026, and contact
+          registrants about future operations. We do not sell, rent, or trade personal information.</p>
+
+        <h2>SMS messages</h2>
+        <p>We only send text messages to people who provide a mobile number <strong>and</strong> check the SMS consent
+          box. You can reply <strong>STOP</strong> to opt out at any time, or <strong>HELP</strong> for help. Message
+          and data rates may apply.</p>
+
+        <h2>Cookies</h2>
+        <p>We use a small number of first-party cookies to keep your check-in session in sync with the live broadcast.
+          We do not use third-party advertising trackers on this site.</p>
+
+        <h2>Your choices</h2>
+        <p>To unsubscribe from email, use the link in any message we send you. To request deletion of your data, email
+          <a href="mailto:privacy@mission151.com">privacy@mission151.com</a>.
+        </p>
+
+        <h2>Contact</h2>
+        <p>Victor Marx for Governor<br>[Registered agent name and physical mailing address]</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-top">
+        <p class="footer-tag">Mission 151 is the live launch of the Colorado Comeback. May 6, 2026.</p>
+        <div class="footer-links">
+          <a href="index.html#about">About</a>
+          <a href="live.html">Watch</a>
+          <a href="store.html">Store</a>
+          <a href="checkin.html">Check in</a>
+          <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
+        </div>
+      </div>
+      <div class="footer-legal">
+        Paid for by Victor Marx for Governor.<br>
+        [Registered agent name and physical mailing address]<br>
+        Not authorized by any candidate or candidate's committee other than Victor Marx for Governor.
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/site.js"></script>
 </body>
+
 </html>
